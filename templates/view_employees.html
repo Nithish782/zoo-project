@@ -22,7 +22,9 @@
 
 <td>
     <a href="/edit_employee/{{ e[0] }}" class="btn btn-warning btn-sm">Edit</a>
-    <a href="/delete_employee/{{ e[0] }}" class="btn btn-danger btn-sm">Delete</a>
+    <a href="/delete_employee/{{ e[0] }}" 
+   onclick="return confirm('Are you sure?')" 
+   class="btn btn-danger btn-sm">Delete</a>
 </td>
 
 </tr>

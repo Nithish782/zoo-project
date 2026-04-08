@@ -1,6 +1,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
 }
 
 /* Sidebar */
@@ -26,6 +27,10 @@ body {
 .menu:hover {
     background: #334155;
     color: white;
+}
+
+.card {
+    border-radius: 12px;
 }
 
 /* Content */

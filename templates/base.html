@@ -8,6 +8,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
         <h4 class="text-white">🐾 Zoo</h4>
         <hr>
 
-        <a href="/" class="menu">Dashboard</a>
+        <a href="/" class="menu"><i class="fas fa-home"></i> Dashboard</a>
        
         <a href="/add_animal" class="menu">Add Animal</a>
         <a href="/add_employee" class="menu">Add Employee</a>
@@ -27,12 +28,11 @@
         <a href="/add_ticket" class="menu">Add Ticket</a>
         <a href="/add_feed" class="menu">Add Feed</a>
 
-        <a href="/animals" class="menu">Animals</a>
-        <a href="/employees" class="menu">Employees</a>
-        <a href="/visitors" class="menu">Visitors</a> 
-        <a href="/tickets" class="menu">Tickets</a>
-        <a href="/feed" class="menu">Feed Schedule</a>
-        
+        <a href="/animals" class="menu"><i class="fas fa-paw"></i> Animals</a>
+        <a href="/employees" class="menu"><i class="fas fa-users"></i> Employees</a>
+        <a href="/visitors" class="menu"><i class="fas fa-user"></i> Visitors</a>
+        <a href="/tickets" class="menu"><i class="fas fa-ticket"></i> Tickets</a>
+        <a href="/feed" class="menu"><i class="fas fa-utensils"></i> Feed Schedule</a>
 
 
         <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
@@ -48,12 +48,20 @@
         {% block content %}{% endblock %}
     </div>
 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <div class="alert alert-success">
+            {{ messages[0] }}
+        </div>
+    {% endif %}
+    {% endwith %}
+
 </div>
 
+
+</body>
 <footer class="text-center mt-4">
     <hr>
     <p>© 2026 Zoo Management System | Developed by Nithi</p>
 </footer>
-
-</body>
 </html>

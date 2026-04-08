@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from zoo_database import ZooDatabase
 from animal import Animal
 import os
@@ -84,6 +84,8 @@ def add_employee():
         return redirect('/employees')
 
     return render_template('add_employee.html')
+    flash("Employee Added Successfully!")
+
 
 @app.route('/employees')
 def employees():
