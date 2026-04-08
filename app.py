@@ -11,7 +11,15 @@ zoo_db = ZooDatabase()
 def home():
     if 'user' not in session:
         return redirect('/login')
-    return render_template('index.html')
+    
+    animals = len(zoo_db.display_animals())
+    employees = len(zoo_db.get_employees())
+    visitors = len(zoo_db.get_visitors())
+
+    return render_template('index.html',
+                           animals=animals,
+                           employees=employees,
+                           visitors=visitors)
 
 # Add Animal Page
 @app.route('/add_animal', methods=['GET', 'POST'])
