@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Visitors</h2>
+
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Name</th><th>Age</th><th>Ticket</th>
+</tr>
+
+{% for v in visitors %}
+<tr>
+<td>{{ v[0] }}</td>
+<td>{{ v[1] }}</td>
+<td>{{ v[2] }}</td>
+<td>{{ v[3] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

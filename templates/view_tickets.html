@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Tickets</h2>
+
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Price</th><th>Visitor</th>
+</tr>
+
+{% for t in tickets %}
+<tr>
+<td>{{ t[0] }}</td>
+<td>{{ t[1] }}</td>
+<td>{{ t[2] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

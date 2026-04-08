@@ -1,0 +1,35 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #1e293b;
+    position: fixed;
+}
+
+.sidebar h4 {
+    text-align: center;
+}
+
+.menu {
+    display: block;
+    color: #cbd5f5;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.menu:hover {
+    background: #334155;
+    color: white;
+}
+
+/* Content */
+.content {
+    margin-left: 220px;
+    width: 100%;
+}

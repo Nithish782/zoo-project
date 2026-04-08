@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Edit Animal</h2>
+
+<form method="POST" class="card p-4 shadow">
+
+    <input value="{{ animal[1] }}" name="name" class="form-control mb-2">
+    <input value="{{ animal[2] }}" name="species" class="form-control mb-2">
+    <input value="{{ animal[3] }}" name="age" class="form-control mb-2">
+    <input value="{{ animal[4] }}" name="health_status" class="form-control mb-2">
+
+    <button class="btn btn-warning">Update</button>
+
+</form>
+
+{% endblock %}

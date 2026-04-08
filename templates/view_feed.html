@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Feed Schedule</h2>
+
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Animal</th><th>Time</th><th>Food</th>
+</tr>
+
+{% for f in feed %}
+<tr>
+<td>{{ f[0] }}</td>
+<td>{{ f[1] }}</td>
+<td>{{ f[2] }}</td>
+<td>{{ f[3] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

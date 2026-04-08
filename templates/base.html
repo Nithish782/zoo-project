@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zoo Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar p-3">
+        <h4 class="text-white">🐾 Zoo</h4>
+        <hr>
+
+        <a href="/" class="menu">Dashboard</a>
+       
+        <a href="/add_animal" class="menu">Add Animal</a>
+        <a href="/add_employee" class="menu">Add Employee</a>
+        <a href="/add_visitor" class="menu">Add Visitor</a>
+        <a href="/add_ticket" class="menu">Add Ticket</a>
+        <a href="/add_feed" class="menu">Add Feed</a>
+
+        <a href="/animals" class="menu">Animals</a>
+        <a href="/employees" class="menu">Employees</a>
+        <a href="/visitors" class="menu">Visitors</a> 
+        <a href="/tickets" class="menu">Tickets</a>
+        <a href="/feed" class="menu">Feed Schedule</a>
+        
+
+
+        <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+        
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content p-4">
+        <nav class="navbar bg-light shadow-sm mb-3">
+            <span class="navbar-brand">Admin Panel</span>
+        </nav>
+
+        {% block content %}{% endblock %}
+    </div>
+
+</div>
+
+</body>
+</html>

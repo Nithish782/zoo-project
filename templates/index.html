@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h5>Total Animals</h5>
+            <p>Manage animals in zoo</p>
+            <a href="/animals" class="btn btn-primary">View</a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow p-3">
+            <h5>Employees</h5>
+            <p>Manage staff</p>
+            <a href="/employees" class="btn btn-success">View</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
