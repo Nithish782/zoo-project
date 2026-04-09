@@ -12,8 +12,11 @@
     <h5 class="text-center text-muted">Zoo Admin Login</h5>
 
     <form method="POST">
-        <input type="text" name="username" placeholder="Username" class="form-control mb-2">
-        <input type="password" name="password" placeholder="Password" class="form-control mb-3">
+        <input type="text" name="username" placeholder="Username"
+       class="form-control mb-2"
+       onkeydown="if(event.key==='Enter'){event.preventDefault(); document.getElementById('password').focus();}">
+        <input type="password" id="password" name="password"
+       placeholder="Password" class="form-control mb-3">
 
         <button class="btn btn-primary w-100">Login</button>
     </form>
