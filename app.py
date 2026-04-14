@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, flash
 from zoo_database import ZooDatabase
 from animal import Animal
 import os
+import subprocess
 
 app = Flask(__name__)
 app.secret_key = "zoo_secret"
@@ -187,6 +188,17 @@ def add_feed():
 def feed():
     data = zoo_db.get_feed()
     return render_template('view_feed.html', feed=data)
+
+# @app.route('/ai_monitor')
+# def ai_monitor():
+#     import subprocess
+#     subprocess.Popen(["python", "ai_monitor.py"])
+#     return "AI Monitoring Started! Check camera window."
+
+@app.route('/alerts')
+def alerts():
+    data = zoo_db.get_alerts()
+    return render_template('alerts.html', alerts=data)
 
 @app.route('/logout')
 def logout():

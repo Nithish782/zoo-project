@@ -9,6 +9,7 @@ class ZooDatabase:
         self.create_visitor_table()
         self.create_ticket_table()
         self.create_feed_table()
+        self.create_alert_table()
 
     def create_table(self):
         self.cursor.execute("""
@@ -146,6 +147,26 @@ class ZooDatabase:
             (animal_id, time, food)
         )
         self.conn.commit()
+    
+
+    def create_alert_table(self):
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS alerts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            message TEXT,
+            time TEXT
+        )
+        """)
+        self.conn.commit()
+    
+    def add_alert(self, message, time):
+        self.cursor.execute("INSERT INTO alerts (message, time) VALUES (?, ?)",
+            (message, time))
+        self.conn.commit()
+
+    def get_alerts(self):
+        self.cursor.execute("SELECT * FROM alerts ORDER BY id DESC")
+        return self.cursor.fetchall()
 
     def get_feed(self):
         self.cursor.execute("SELECT * FROM feed_schedule")
