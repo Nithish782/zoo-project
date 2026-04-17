@@ -205,12 +205,12 @@ def alerts():
 
 @app.route('/add_alert', methods=['POST'])
 def add_alert():
-    data = request.json
-    message = data.get('message')
-
-    print("📩 Alert received:", message)   # 🔥 DEBUG
+    data = request.get_json()
+    message = data.get("message")
 
     zoo_db.add_alert(message)
+
+    print("📩 Alert received:", message)
 
     return {"status": "success"}
 

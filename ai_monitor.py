@@ -59,7 +59,7 @@ def run_detection():
 
                         try:
                             res = requests.post(
-                                "http://127.0.0.1:5000/add_alert",
+                                "https://zoo-project-xjw4.onrender.com/alerts",
                                 json={"message": f"{label} entered restricted area"}
                             )
 

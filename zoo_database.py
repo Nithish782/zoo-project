@@ -160,16 +160,18 @@ class ZooDatabase:
         """)
         self.conn.commit()
     
-    def add_alert(self, message, time):
-        self.cursor.execute("INSERT INTO alerts (message, time) VALUES (?, ?)",
-            (message, time))
-        self.conn.commit()
+    from datetime import datetime
 
     def add_alert(self, message):
-        self.alerts.append(message)
+        current_time = datetime.now().strftime("%H:%M:%S")
+
+        self.cursor.execute(
+            "INSERT INTO alerts (message, time) VALUES (?, ?)",
+            (message, current_time)
+        )
+        self.conn.commit()
     
-    def get_alerts(self):
-        return self.alerts
+    
 
     def get_alerts(self):
         self.cursor.execute("SELECT * FROM alerts ORDER BY id DESC")
