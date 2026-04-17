@@ -189,16 +189,30 @@ def feed():
     data = zoo_db.get_feed()
     return render_template('view_feed.html', feed=data)
 
-# @app.route('/ai_monitor')
-# def ai_monitor():
-#     import subprocess
-#     subprocess.Popen(["python", "ai_monitor.py"])
-#     return "AI Monitoring Started! Check camera window."
+@app.route('/ai_monitor')
+def ai_monitor():
+    import subprocess
+    subprocess.Popen(["python", "ai_monitor.py"])
+    return "AI Monitoring Started! Check camera window."
 
 @app.route('/alerts')
 def alerts():
     data = zoo_db.get_alerts()
+    
+    print("📊 Alerts in DB:", data) 
+
     return render_template('alerts.html', alerts=data)
+
+@app.route('/add_alert', methods=['POST'])
+def add_alert():
+    data = request.json
+    message = data.get('message')
+
+    print("📩 Alert received:", message)   # 🔥 DEBUG
+
+    zoo_db.add_alert(message)
+
+    return {"status": "success"}
 
 @app.route('/logout')
 def logout():

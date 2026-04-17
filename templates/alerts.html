@@ -4,19 +4,21 @@
 
 <h2>🚨 Alerts</h2>
 
-<table class="table table-striped">
-<tr>
-<th>ID</th><th>Message</th><th>Time</th>
-</tr>
+{% if alerts %}
+    <table class="table table-striped">
+        <tr>
+            <th>Message</th>
+        </tr>
 
-{% for a in alerts %}
-<tr>
-<td>{{ a[0] }}</td>
-<td>{{ a[1] }}</td>
-<td>{{ a[2] }}</td>
-</tr>
-{% endfor %}
+        {% for alert in alerts %}
+        <tr>
+            <td>{{ alert }}</td>
+        </tr>
+        {% endfor %}
 
-</table>
+    </table>
+{% else %}
+    <p>No alerts yet</p>
+{% endif %}
 
 {% endblock %}
