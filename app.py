@@ -5,7 +5,7 @@ import os
 import subprocess
 from flask import request
 import time
-from models.tickets import Ticket
+from models.ticket import Ticket
 
 app = Flask(__name__)
 app.secret_key = "zoo_secret"
@@ -154,27 +154,27 @@ def visitors():
     data = zoo_db.get_visitors()
     return render_template('view_visitors.html', visitors=data)
 
-@app.route('/add_ticket', methods=['GET', 'POST'])
+@app.route('/add_ticket', methods=['GET','POST'])
 def add_ticket():
-    try:
-        if request.method == 'POST':
-            print("FORM DATA:", request.form)
+    if request.method == 'POST':
+        try:
+            from models.ticket import Ticket   # 🔥 FIX import path if needed
 
             ticket_id = request.form.get('ticket_id')
             price = request.form.get('price')
             visitor_name = request.form.get('visitor_name')
 
-            zoo_db.add_ticket(
-                Ticket(ticket_id, float(price), visitor_name)
-            )
+            ticket = Ticket(ticket_id, float(price), visitor_name)
+
+            zoo_db.add_ticket(ticket)
 
             return redirect('/tickets')
 
-        return render_template('add_ticket.html')
+        except Exception as e:
+            print("❌ ERROR:", e)
+            return str(e)   # 🔥 THIS WILL SHOW ERROR ON SCREEN
 
-    except Exception as e:
-        print("❌ ERROR:", e)
-        return str(e)   # 🔥 shows real error
+    return render_template('add_ticket.html')
 
 
 @app.route('/tickets')
