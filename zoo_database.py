@@ -10,7 +10,6 @@ class ZooDatabase:
         self.create_ticket_table()
         self.create_feed_table()
         self.create_alert_table()
-        self.alerts = []
 
     def create_table(self):
         self.cursor.execute("""
@@ -162,12 +161,10 @@ class ZooDatabase:
     
     from datetime import datetime
 
-    def add_alert(self, message):
-        current_time = datetime.now().strftime("%H:%M:%S")
-
+    def add_alert(self, message, time):
         self.cursor.execute(
             "INSERT INTO alerts (message, time) VALUES (?, ?)",
-            (message, current_time)
+            (message, time)
         )
         self.conn.commit()
     

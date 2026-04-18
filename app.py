@@ -3,6 +3,8 @@ from zoo_database import ZooDatabase
 from animal import Animal
 import os
 import subprocess
+from flask import request
+import time
 
 app = Flask(__name__)
 app.secret_key = "zoo_secret"
@@ -206,13 +208,15 @@ def alerts():
 @app.route('/add_alert', methods=['POST'])
 def add_alert():
     data = request.get_json()
-    message = data.get("message")
 
-    zoo_db.add_alert(message)
+    message = data.get("message")
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+
+    zoo_db.add_alert(message, current_time)
 
     print("📩 Alert received:", message)
 
-    return {"status": "success"}
+    return {"status": "success"}, 200
 
 @app.route('/logout')
 def logout():
