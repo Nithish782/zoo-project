@@ -5,6 +5,7 @@ import os
 import subprocess
 from flask import request
 import time
+from models.tickets import Ticket
 
 app = Flask(__name__)
 app.secret_key = "zoo_secret"
@@ -153,19 +154,27 @@ def visitors():
     data = zoo_db.get_visitors()
     return render_template('view_visitors.html', visitors=data)
 
-@app.route('/add_ticket', methods=['GET','POST'])
+@app.route('/add_ticket', methods=['GET', 'POST'])
 def add_ticket():
-    if request.method == 'POST':
-        from ticket import Ticket
-        t = Ticket(
-            request.form['ticket_id'],
-            float(request.form['price']),
-            request.form['visitor_name']
-        )
-        zoo_db.add_ticket(t)
-        return redirect('/tickets')
+    try:
+        if request.method == 'POST':
+            print("FORM DATA:", request.form)
 
-    return render_template('add_ticket.html')
+            ticket_id = request.form.get('ticket_id')
+            price = request.form.get('price')
+            visitor_name = request.form.get('visitor_name')
+
+            zoo_db.add_ticket(
+                Ticket(ticket_id, float(price), visitor_name)
+            )
+
+            return redirect('/tickets')
+
+        return render_template('add_ticket.html')
+
+    except Exception as e:
+        print("❌ ERROR:", e)
+        return str(e)   # 🔥 shows real error
 
 
 @app.route('/tickets')
@@ -225,4 +234,4 @@ def logout():
 
 
 if __name__ == "__main__":
-     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+     app.run(debug=True)
