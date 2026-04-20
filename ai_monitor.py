@@ -12,8 +12,8 @@ def run_detection():
     # ROI
     x1, y1, x2, y2 = 100, 100, 500, 400
 
-    # Person + Animals (COCO)
-    allowed_classes = [0, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    # Animals only (COCO)
+    allowed_classes = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
 
     last_alert_time = 0   # 🔥 prevent spam
 
@@ -42,7 +42,7 @@ def run_detection():
                 cx = (xA + xB) // 2
                 cy = (yA + yB) // 2
 
-                label = "Person" if cls == 0 else "Animal"
+                label = "Animal"
 
                 # Draw box
                 cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
@@ -59,7 +59,7 @@ def run_detection():
 
                         try:
                             res = requests.post(
-                                "https://zoo-project-xjw4.onrender.com/add_alert",
+                                "http://localhost:5000/add_alert",
                                 json={"message": f"{label} entered restricted area"}
                             )
 
