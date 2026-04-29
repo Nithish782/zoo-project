@@ -4,6 +4,7 @@ class ZooDatabase:
     def __init__(self):
         self.conn = sqlite3.connect("zoo.db", check_same_thread=False)
         self.cursor = self.conn.cursor()
+
         self.create_table()
         self.create_employee_table()
         self.create_visitor_table()
@@ -11,6 +12,7 @@ class ZooDatabase:
         self.create_feed_table()
         self.create_alert_table()
 
+    # ---------------- ANIMALS ----------------
     def create_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS animals (
@@ -35,7 +37,7 @@ class ZooDatabase:
     def remove_animal(self, animal_id):
         self.cursor.execute("DELETE FROM animals WHERE animal_id=?", (animal_id,))
         self.conn.commit()
-    
+
     def get_animal(self, animal_id):
         self.cursor.execute("SELECT * FROM animals WHERE animal_id=?", (animal_id,))
         return self.cursor.fetchone()
@@ -47,14 +49,15 @@ class ZooDatabase:
         WHERE animal_id=?
         """, (name, species, age, health, animal_id))
         self.conn.commit()
-    
+
     def search_animals(self, query):
         self.cursor.execute("""
         SELECT * FROM animals 
         WHERE name LIKE ? OR species LIKE ?
         """, (f'%{query}%', f'%{query}%'))
         return self.cursor.fetchall()
-    
+
+    # ---------------- EMPLOYEES ----------------
     def create_employee_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS employees (
@@ -74,7 +77,7 @@ class ZooDatabase:
     def get_employees(self):
         self.cursor.execute("SELECT * FROM employees")
         return self.cursor.fetchall()
-    
+
     def delete_employee(self, emp_id):
         self.cursor.execute("DELETE FROM employees WHERE emp_id=?", (emp_id,))
         self.conn.commit()
@@ -90,7 +93,8 @@ class ZooDatabase:
         WHERE emp_id=?
         """, (name, role, salary, emp_id))
         self.conn.commit()
-    
+
+    # ---------------- VISITORS ----------------
     def create_visitor_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS visitors (
@@ -110,7 +114,24 @@ class ZooDatabase:
     def get_visitors(self):
         self.cursor.execute("SELECT * FROM visitors")
         return self.cursor.fetchall()
-    
+
+    def get_visitor(self, visitor_id):
+        self.cursor.execute("SELECT * FROM visitors WHERE visitor_id=?", (visitor_id,))
+        return self.cursor.fetchone()
+
+    def update_visitor(self, visitor_id, name, age, ticket_id):
+        self.cursor.execute("""
+        UPDATE visitors
+        SET name=?, age=?, ticket_id=?
+        WHERE visitor_id=?
+        """, (name, age, ticket_id, visitor_id))
+        self.conn.commit()
+
+    def delete_visitor(self, visitor_id):   # ✅ NEW
+        self.cursor.execute("DELETE FROM visitors WHERE visitor_id=?", (visitor_id,))
+        self.conn.commit()
+
+    # ---------------- TICKETS ----------------
     def create_ticket_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS tickets (
@@ -126,10 +147,27 @@ class ZooDatabase:
             (ticket.ticket_id, ticket.price, ticket.visitor_name))
         self.conn.commit()
 
-    def get_tickets(self):
+    def get_tickets(self):   # ✅ NEW
         self.cursor.execute("SELECT * FROM tickets")
         return self.cursor.fetchall()
-    
+
+    def get_ticket(self, ticket_id):
+        self.cursor.execute("SELECT * FROM tickets WHERE ticket_id=?", (ticket_id,))
+        return self.cursor.fetchone()
+
+    def update_ticket(self, ticket_id, price, visitor_name):
+        self.cursor.execute("""
+        UPDATE tickets
+        SET price=?, visitor_name=?
+        WHERE ticket_id=?
+        """, (price, visitor_name, ticket_id))
+        self.conn.commit()
+
+    def delete_ticket(self, ticket_id):   # ✅ NEW
+        self.cursor.execute("DELETE FROM tickets WHERE ticket_id=?", (ticket_id,))
+        self.conn.commit()
+
+    # ---------------- FEED ----------------
     def create_feed_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS feed_schedule (
@@ -147,8 +185,28 @@ class ZooDatabase:
             (animal_id, time, food)
         )
         self.conn.commit()
-    
 
+    def get_feed(self):
+        self.cursor.execute("SELECT * FROM feed_schedule")
+        return self.cursor.fetchall()
+
+    def get_feed_by_id(self, id):
+        self.cursor.execute("SELECT * FROM feed_schedule WHERE id=?", (id,))
+        return self.cursor.fetchone()
+
+    def update_feed(self, id, animal_id, time, food):
+        self.cursor.execute("""
+        UPDATE feed_schedule
+        SET animal_id=?, time=?, food=?
+        WHERE id=?
+        """, (animal_id, time, food, id))
+        self.conn.commit()
+
+    def delete_feed(self, id):   # ✅ NEW
+        self.cursor.execute("DELETE FROM feed_schedule WHERE id=?", (id,))
+        self.conn.commit()
+
+    # ---------------- ALERTS ----------------
     def create_alert_table(self):
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS alerts (
@@ -158,8 +216,6 @@ class ZooDatabase:
         )
         """)
         self.conn.commit()
-    
-    from datetime import datetime
 
     def add_alert(self, message, time):
         self.cursor.execute(
@@ -167,14 +223,7 @@ class ZooDatabase:
             (message, time)
         )
         self.conn.commit()
-    
-    
 
     def get_alerts(self):
         self.cursor.execute("SELECT * FROM alerts ORDER BY id DESC")
         return self.cursor.fetchall()
-
-    def get_feed(self):
-        self.cursor.execute("SELECT * FROM feed_schedule")
-        return self.cursor.fetchall()
-        

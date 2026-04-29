@@ -2,31 +2,40 @@
 
 {% block content %}
 
-<h2>Dashboard</h2>
+<h2 class="mb-4">Dashboard</h2>
 
 <div class="row">
 
     <div class="col-md-4">
-        <div class="card p-3 shadow">
+        <div class="card shadow p-4 text-center bg-primary text-white">
+            <i class="fas fa-paw fa-2x mb-2"></i>
             <h5>Total Animals</h5>
             <h2>{{ animals }}</h2>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card p-3 shadow">
+        <div class="card shadow p-4 text-center bg-success text-white">
+            <i class="fas fa-users fa-2x mb-2"></i>
             <h5>Employees</h5>
             <h2>{{ employees }}</h2>
         </div>
     </div>
 
     <div class="col-md-4">
-        <div class="card p-3 shadow">
+        <div class="card shadow p-4 text-center bg-warning text-dark">
+            <i class="fas fa-user fa-2x mb-2"></i>
             <h5>Visitors</h5>
             <h2>{{ visitors }}</h2>
         </div>
     </div>
 
+</div>
+
+<div class="mt-4">
+    <a href="/live" class="btn btn-dark">
+        🎥 Open AI Monitor
+    </a>
 </div>
 
 {% endblock %}

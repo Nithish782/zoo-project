@@ -4,20 +4,59 @@
 
 <h2>Feed Schedule</h2>
 
-<table class="table table-striped">
-<tr>
-<th>ID</th><th>Animal</th><th>Time</th><th>Food</th>
-</tr>
+<div class="card p-3 shadow mb-4">
+    <h4>Add Feed</h4>
 
-{% for f in feed %}
-<tr>
-<td>{{ f[0] }}</td>
-<td>{{ f[1] }}</td>
-<td>{{ f[2] }}</td>
-<td>{{ f[3] }}</td>
-</tr>
-{% endfor %}
+    <form method="POST">
+        <div class="row">
 
+            <div class="col-md-4">
+                <input type="text" name="animal_id" class="form-control" placeholder="Animal ID" required>
+            </div>
+
+            <div class="col-md-4">
+                <input type="time" name="time" class="form-control" required>
+            </div>
+
+            <div class="col-md-4">
+                <input type="text" name="food" class="form-control" placeholder="Food" required>
+            </div>
+
+        </div>
+
+        <button class="btn btn-success mt-3">Add Feed</button>
+    </form>
+</div>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Animal ID</th>
+            <th>Time</th>
+            <th>Food</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for f in feed %}
+        <tr>
+            <td>{{ f[1] }}</td>
+            <td>{{ f[2] }}</td>
+            <td>{{ f[3] }}</td>
+            <td>
+            <a href="/edit_feed/{{ f[0] }}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="/delete_feed/{{ f[0] }}"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Delete this record?');">
+                Delete
+            </a>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 
 {% endblock %}

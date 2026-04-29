@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Feed</h2>
+
+<form method="POST">
+
+    <input class="form-control mb-2" value="{{ feed[0] }}" disabled>
+    <input type="text" name="animal_id" class="form-control mb-2" value="{{ feed[1] }}">
+    <input type="time" name="time" class="form-control mb-2" value="{{ feed[2] }}">
+    <input type="text" name="food" class="form-control mb-2" value="{{ feed[3] }}">
+
+    <button class="btn btn-primary">Update</button>
+</form>
+{% endblock %}

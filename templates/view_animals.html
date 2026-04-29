@@ -2,12 +2,41 @@
 
 {% block content %}
 
-<h2>Animal List</h2>
+<h2>Animal Management</h2>
 
-<form action="/search" method="GET" class="mb-3 d-flex">
-    <input type="text" name="q" class="form-control me-2" placeholder="Search animal...">
-    <button class="btn btn-primary">Search</button>
-</form>
+<div class="card p-3 shadow mb-4">
+    <h4>Add Animal</h4>
+
+    <form method="POST" action="/animals">
+        <div class="row">
+
+            <div class="col-md-2">
+                <input type="text" name="animal_id" class="form-control" placeholder="ID" required>
+            </div>
+
+            <div class="col-md-2">
+                <input type="text" name="name" class="form-control" placeholder="Name" required>
+            </div>
+
+            <div class="col-md-2">
+                <input type="text" name="species" class="form-control" placeholder="Species" required>
+            </div>
+
+            <div class="col-md-2">
+                <input type="number" name="age" class="form-control" placeholder="Age" required>
+            </div>
+
+            <div class="col-md-2">
+                <input type="text" name="health_status" class="form-control" placeholder="Health" required>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Add</button>
+            </div>
+
+        </div>
+    </form>
+</div>
 
 <table class="table table-striped shadow">
     <thead class="table-dark">
@@ -17,27 +46,30 @@
             <th>Species</th>
             <th>Age</th>
             <th>Health</th>
-            <th>Action</th>
+            <th>Actions</th>
         </tr>
     </thead>
 
     <tbody>
-        {% for a in animals %}
-        <tr>
-            <td>{{ a[0] }}</td>
-            <td>{{ a[1] }}</td>
-            <td>{{ a[2] }}</td>
-            <td>{{ a[3] }}</td>
-            <td>{{ a[4] }}</td>
-            <td>
-                <a href="/delete_animal/{{ a[0] }}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-            <td>
-                <a href="/edit_animal/{{ a[0] }}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="/delete_animal/{{ a[0] }}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
+    {% for animal in animals %}
+    <tr>
+        <td>{{ animal[0] }}</td>
+        <td>{{ animal[1] }}</td>
+        <td>{{ animal[2] }}</td>
+        <td>{{ animal[3] }}</td>
+        <td>{{ animal[4] }}</td>
+
+        <td>
+            <a href="/edit_animal/{{ animal[0] }}" class="btn btn-warning btn-sm">Edit</a>
+
+            <a href="/delete_animal/{{ animal[0] }}"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Delete this animal?');">
+                Delete
+                </a>
+        </td>
+    </tr>
+    {% endfor %}
     </tbody>
 </table>
 

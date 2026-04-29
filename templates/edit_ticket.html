@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Ticket</h2>
+
+<form method="POST">
+
+    <input class="form-control mb-2" value="{{ ticket[0] }}" disabled>
+    <input type="text" name="visitor_name" class="form-control mb-2" value="{{ ticket[2] }}">
+    <input type="number" name="price" class="form-control mb-2" value="{{ ticket[1] }}">
+
+    <button class="btn btn-primary">Update</button>
+</form>
+{% endblock %}

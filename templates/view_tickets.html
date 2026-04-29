@@ -2,21 +2,60 @@
 
 {% block content %}
 
-<h2>Tickets</h2>
+<h2>Ticket Management</h2>
 
-<table class="table table-striped">
-<tr>
-<th>ID</th><th>Price</th><th>Visitor</th>
-</tr>
+<div class="card p-3 shadow mb-4">
+    <h4>Add Ticket</h4>
 
-{% for t in tickets %}
-<tr>
-<td>{{ t[0] }}</td>
-<td>{{ t[1] }}</td>
-<td>{{ t[2] }}</td>
-</tr>
-{% endfor %}
+    <form method="POST">
+        <div class="row">
 
+            <div class="col-md-4">
+                <input type="text" name="ticket_id" class="form-control" placeholder="Ticket ID" required>
+            </div>
+
+            <div class="col-md-4">
+                <input type="text" name="visitor_name" class="form-control" placeholder="Visitor Name" required>
+            </div>
+
+            <div class="col-md-4">
+                <input type="number" name="price" class="form-control" placeholder="Price" required>
+            </div>
+
+        </div>
+
+        <button class="btn btn-success mt-3">Add Ticket</button>
+    </form>
+</div>
+
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Visitor</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for t in tickets %}
+        <tr>
+            <td>{{ t[0] }}</td>
+            <td>{{ t[2] }}</td>
+            <td>{{ t[1] }}</td>
+             <td>
+                <a href="/edit_ticket/{{ t[0] }}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="/delete_ticket/{{ t[0] }}"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Delete this ticket?');">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 
 {% endblock %}
