@@ -38,3 +38,24 @@ body {
     margin-left: 220px;
     width: 100%;
 }
+
+.alert-box {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: red;
+    color: white;
+    padding: 15px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    z-index: 9999;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0.3;}
+    100% {opacity: 1;}
+}

@@ -236,6 +236,17 @@ def add_alert():
 
     return {"status": "ok"}, 200
 
+@app.route('/latest_alert')
+def latest_alert():
+    data = zoo_db.get_alerts()
+    
+    if data:
+        latest = data[0]   # latest alert
+        return {
+            "message": latest[1],
+            "time": latest[2]
+        }
+    return {"message": "", "time": ""}
 
 # -------------------- AI MONITOR --------------------
 @app.route('/video_feed')

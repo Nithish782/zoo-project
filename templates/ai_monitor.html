@@ -31,6 +31,7 @@
             padding: 15px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0,255,255,0.2);
+            position: relative;
         }
 
         .video-box img {
@@ -38,35 +39,45 @@
             border-radius: 10px;
         }
 
-        .alert-box {
-            flex: 1;
-            background: #020617;
-            padding: 15px;
-            border-radius: 10px;
-            height: 500px;
-            overflow-y: auto;
-            box-shadow: 0 0 10px rgba(255,0,0,0.2);
-        }
-
-        .alert-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #f87171;
-        }
-
-        .alert {
-            background: #1e293b;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-left: 4px solid red;
-            border-radius: 5px;
-        }
-
         .status {
             margin-top: 10px;
             color: #22c55e;
             font-size: 14px;
         }
+
+        /* 🚨 ALERT POPUP */
+        #alertPopup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: red;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            z-index: 9999;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {opacity: 1;}
+            50% {opacity: 0.3;}
+            100% {opacity: 1;}
+        }
+
+        .sound-btn {
+            margin-bottom: 10px;
+            padding: 8px 15px;
+            background: #22c55e;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 
@@ -76,21 +87,82 @@
     🤖 AI Zoo Monitoring Dashboard
 </header>
 
+<!-- 🚨 ALERT POPUP -->
+<div id="alertPopup">
+    🚨 ANIMAL ENTERED RESTRICTED AREA!
+</div>
+
 <div class="container">
 
     <!-- VIDEO SECTION -->
     <div class="video-box">
-        <h3>Live Feed</h3>
 
-        <!-- Your video stream -->
-        <!-- <img src="{{ url_for('video_feed') }}"> -->
-        <img src="/video_feed" width="800">
+        <!-- 🔊 Enable Sound -->
+        <button onclick="enableSound()" class="sound-btn">
+            🔊 Enable Alarm Sound
+        </button>
+
+        <!-- 🔊 Audio -->
+        <audio id="alarmSound" src="{{ url_for('static', filename='alarm.mp3') }}"></audio>
+
+        <!-- 🎥 Video Feed -->
+        <img src="/video_feed">
 
         <div class="status">🟢 System Running</div>
     </div>
 
-
 </div>
+
+<script>
+let lastAlertTime = "";
+let soundEnabled = false;
+
+// 🔊 Enable sound manually
+function enableSound() {
+    let sound = document.getElementById("alarmSound");
+
+    sound.play().then(() => {
+        sound.pause();
+        sound.currentTime = 0;
+        soundEnabled = true;
+        alert("🔊 Sound Enabled!");
+    }).catch(() => {
+        alert("Click again to enable sound");
+    });
+}
+
+// 🚨 Check alert from backend
+function checkAlert() {
+    fetch('/latest_alert')
+    .then(res => res.json())
+    .then(data => {
+
+        if (data.time && data.time !== lastAlertTime) {
+
+            lastAlertTime = data.time;
+
+            // 🔴 Show popup
+            let popup = document.getElementById("alertPopup");
+            popup.style.display = "block";
+
+            // 🔊 Play sound
+            let sound = document.getElementById("alarmSound");
+            if (soundEnabled) {
+                sound.currentTime = 0;
+                sound.play();
+            }
+
+            // Hide after 5 sec
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 5000);
+        }
+    });
+}
+
+// Run every 2 sec
+setInterval(checkAlert, 2000);
+</script>
 
 </body>
 </html>
